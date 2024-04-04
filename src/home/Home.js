@@ -7,7 +7,6 @@ import {
 import CommonHeader from '../common/CommonHeader';
 
 const HomeScreen = ({navigation})=>{
-    console.log(navigation.openDrawer)
     const onMenuPress = () => navigation.openDrawer()
     return(
         <View

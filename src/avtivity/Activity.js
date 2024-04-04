@@ -6,25 +6,28 @@ import {
     StyleSheet,
     TouchableOpacity,
     TouchableWithoutFeedback,
-    Dimensions,
     Modal
 } from 'react-native';
+import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
 
 import TargetAddScreen from './TargetAdd';
 import CommonHeader from '../common/CommonHeader';
-import { flingGestureHandlerProps } from 'react-native-gesture-handler/lib/typescript/handlers/FlingGestureHandler';
 import SuccessModal from './SuccesModal'
 
 const ActivityScreen = ({navigation})=>{
     const onBackPress = ()=>navigation.goBack();
     const onMenuPress = () => navigation.openDrawer()
-
+    
+    const [menuVisible, setMenuVisible] = useState(false);
+    const toggleVisible =()=> setMenuVisible(!menuVisible);
+    
     const [activityViewMode, setActivityViewMode] = useState(false)
     const [targetAddModal, setTargetAddModal] = useState(false);
     return(
         <View
             style={{
-                paddingHorizontal:25
+                paddingHorizontal:30,
+                paddingTop:40
             }}
         >
             <CommonHeader
@@ -195,11 +198,27 @@ const ActivityScreen = ({navigation})=>{
                                 <Text>About 3 minutes ago</Text>
                             </View>
                         </View>
-                        <TouchableOpacity>
-                            <Image
-                                source={require('../../assets/image/more-vertical5.png')}
-                            />
-                        </TouchableOpacity>
+                        <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+                            <Menu
+                                visible={menuVisible}
+                                anchor={
+                                    <TouchableOpacity
+                                        onPress={()=>toggleVisible()}
+                                    >
+                                        <Image
+                                            source={require('../../assets/image/more-vertical5.png')}
+                                        />
+                                    </TouchableOpacity>
+                                }
+                                onRequestClose={toggleVisible}
+                            >
+                                <MenuItem onPress={toggleVisible}>Menu item 1</MenuItem>
+                                <MenuItem onPress={toggleVisible}>Menu item 2</MenuItem>
+                                <MenuItem disabled>Disabled item</MenuItem>
+                                <MenuDivider />
+                                <MenuItem onPress={toggleVisible}>Menu item 4</MenuItem>
+                            </Menu>
+                        </View>
                     </TouchableOpacity>
                     <TouchableOpacity 
                         style={styles.thirdSectioncard}

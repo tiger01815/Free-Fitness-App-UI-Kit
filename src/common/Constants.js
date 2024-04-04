@@ -79,54 +79,33 @@ export default {
     LAYOUT: {
         SCREEN_WIDTH: Dimensions.get('window').width,
         SCREEN_HEIGHT: Dimensions.get('window').height,
-        BOTTOM_BAR_HEIGHT: 55,
-        HEADER_BAR_HEIGHT: 48,
+        BOTTOM_BAR_HEIGHT: 80,
+        HEADER_BAR_HEIGHT: 32,
     },
 
     COLOR: {
         PRIMARY: '#EA1263',
-        PRIMARY_02: 'rgba(234,18,99,0.2)',
-        RED: 'rgba(228,30,39,1)',
-
-        SECONDARY: '#070103',
-
-        GRAY_DARK: 'rgba(48,48,48,1)',
-        GRAY: 'rgba(122,117,119,1)',
-        GRAY_LIGHT: 'rgba(170,170,170,1)',
-        GRAY_SEPERATOR: 'rgba(225,225,225,1)',
-        BLACK_01: 'rgba(0,0,0,0.1)',
-
-        BLUE: 'rgba(101,218,222,1)',
-        BLUE_LIGHT: 'rgba(166,225,228,1)',
-        BLUE_SEPERATOR: 'rgba(84,200,204,1)',
-        BLUE_DIFF: 'rgba(206,238,240,1)',
-
-        BLACK: 'rgba(0,0,0,1)',
-        WHITE: 'rgba(255,255,255,1)',
-        WHITE_04: 'rgba(255,255,255,0.4)',
-        WHITE_08: 'rgba(255,255,255,0.8)',
-        TRANSPARENT: 'transparent',
+        BackColor:'#1D1617',
+        WHITE:'#ffffff',
+        GREY:'#7B6F72',
+        GREY1:'#ADA4A5',
+        GREY2:'#DDDADA',
+        BORDERCOLOR:'#F7F8F8'
     },
 
     FONT_FAMILY: {
         ...Platform.select({
             ios: {
-                PRIMARY_REGULAR: 'AvenirNextLTPro-Regular',
-                PRIMARY_MEDIUM: 'AvenirNextLTPro-Medium',
-                PRIMARY_DEMI: 'AvenirNextLTPro-Demi',
-                PRIMARY_BOLD: 'AvenirNextLTPro-Bold',
-
-                SECONDARY: 'FONTSFREE-NET-AUGUST-BOLD',
-                CLOCK: 'BebasNeue-Regular',
+                PRIMARY_REGULAR: 'Poppins-Regular',
+                PRIMARY_MEDIUM: 'Poppins-Medium',
+                PRIMARY_SEMI: 'Poppins-SemiBold',
+                PRIMARY_BOLD: 'Poppins-Bold',
             },
             android: {
-                PRIMARY_REGULAR: 'AvenirNextLTPro-Regular',
-                PRIMARY_MEDIUM: 'AvenirNextLTPro-Medium',
-                PRIMARY_DEMI: 'AvenirNextLTPro-Demi',
-                PRIMARY_BOLD: 'AvenirNextLTPro-Bold',
-
-                SECONDARY: 'FONTSFREE-NET-AUGUST-BOLD',
-                CLOCK: 'BebasNeue-Regular',
+                PRIMARY_REGULAR: 'Poppins-Regular',
+                PRIMARY_MEDIUM: 'Poppins-Medium',
+                PRIMARY_SEMI: 'Poppins-SemiBold',
+                PRIMARY_BOLD: 'Poppins-Bold',
             },
         })
     },

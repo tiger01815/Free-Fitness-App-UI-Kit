@@ -6,39 +6,61 @@ import {
     TouchableOpacity,
     Dimensions,
     ScrollView,
-    StyleSheet
+    StyleSheet,
+    StatusBar
 } from 'react-native'
 import { Shadow } from 'react-native-shadow-2';
 import { Switch } from 'react-native-switch';
+import LinearGradient from 'react-native-linear-gradient';
 
+import Constants from '../common/Constants';
 import CommonHeader from '../common/CommonHeader';
 const ProfileScreen = ({navigation})=>{
     const onBackPress =()=> navigation.goBack();
     const onMenuPress = () => navigation.openDrawer()
     // let switchval = true;
-    const [switchval, setSwitchval] = useState(true)
-    return(
-        <ScrollView style={styles.container}>
-          <CommonHeader
+    const [switchval, setSwitchval] = useState(true);
+
+    return(<View
+            style={{
+              flex:1,
+              backgroundColor:'white'
+            }}
+          >
+      <StatusBar barStyle={Platform.OS == 'ios' ? 'dark-content' : 'dark-content'} backgroundColor={Constants.COLOR.WHITE} />
+      <CommonHeader
               title={'Profile'}
               backenable={true}
               onBackPress={onBackPress}
               onMenuPress={onMenuPress}
-          />
+      />
+        <ScrollView style={styles.container}>
+          
           <View style={styles.firstSectionContainer}>
             <View style={styles.firstSectionHeader}>
               <View style={styles.firstSectionHeaderLeft}>
-                <Image style={styles.firstSectionAvatar} source={require('../../assets/image/Vector.png')}/>
+                <TouchableOpacity>
+                <Image style={styles.firstSectionAvatar} source={require('../../assets/image/Latest-Pic.png')}/>
+                </TouchableOpacity>
                 <View style={styles.firstSectionLeftUserInfo}>
                   <Text style={styles.firstSectionUserName}>Stefani Wong</Text>
-                  <Text>Lose a Fat Program</Text>
+                  <Text style={{
+                    fontFamily:Constants.FONT_FAMILY.PRIMARY_REGULAR,
+                    fontSize:Constants.FONT_SIZE.FT12
+                  }}>Lose a Fat Program</Text>
                 </View>
               </View>
               <TouchableOpacity
                 style={styles.firstSectionEditButton}
                 onPress={()=>navigation.navigate('ProfileEdit')}
               >
+                <LinearGradient
+                  colors={['#92A3FD', '#9DCEFF' ]}
+                  style={styles.firstSectionEditButton}
+                  start={{ x: 1, y: 1 }}
+                >
                 <Text style={styles.firstSectionEditText}>Edit</Text>
+                </LinearGradient>
               </TouchableOpacity>
             </View>
             <View style={styles.firstSectionDetailContainer}>
@@ -76,7 +98,12 @@ const ProfileScreen = ({navigation})=>{
                 </View>
             </View>
           </View>
-          <View style={styles.secondSectionContainer}>
+          <View
+            style={{
+              paddingHorizontal:30
+            }}
+          >
+          <View style={[styles.secondSectionContainer,styles.containershadow]}>
             <View>
               <Text style={styles.secondSectionTitle}>Account</Text>
             </View>
@@ -89,7 +116,7 @@ const ProfileScreen = ({navigation})=>{
                 source={require('../../assets/image/Icon-Profile.png')}
                 style={styles.secondSectionItemIcon}
               />
-              <Text>Personal Data</Text>
+              <Text style={styles.firstSectionCardText2}>Personal Data</Text>
               </View>
               <Image
                 source={require('../../assets/image/ArrowRight2.png')}
@@ -105,7 +132,7 @@ const ProfileScreen = ({navigation})=>{
                   source={require('../../assets/image/Icon-Achievement.png')}
                   style={styles.secondSectionItemIcon}
                 />
-                <Text>Achievement</Text>
+                <Text style={styles.firstSectionCardText2}>Achievement</Text>
               </View>
               <Image
                 source={require('../../assets/image/ArrowRight2.png')}
@@ -121,7 +148,7 @@ const ProfileScreen = ({navigation})=>{
                 source={require('../../assets/image/Icon-Activity.png')}
                 style={styles.secondSectionItemIcon}
               />
-              <Text>Activity History</Text>
+              <Text style={styles.firstSectionCardText2}>Activity History</Text>
               </View>
               <Image
                 source={require('../../assets/image/ArrowRight2.png')}
@@ -137,7 +164,7 @@ const ProfileScreen = ({navigation})=>{
                 source={require('../../assets/image/Icon-Workout.png')}
                 style={styles.secondSectionItemIcon}
               />
-              <Text>Workout Progress</Text>
+              <Text style={styles.firstSectionCardText2}>Workout Progress</Text>
               </View>
               <Image
                 source={require('../../assets/image/ArrowRight2.png')}
@@ -145,7 +172,13 @@ const ProfileScreen = ({navigation})=>{
               />
             </TouchableOpacity>
           </View>
-          <View style={styles.thirdSectionContainer}>
+          </View>
+          <View
+            style={{
+              paddingHorizontal:30
+            }}
+          >
+          <View style={[styles.thirdSectionContainer,styles.containershadow]}>
             <View>
               <Text style={styles.secondSectionTitle}>Notification</Text>  
             </View>
@@ -155,8 +188,16 @@ const ProfileScreen = ({navigation})=>{
                   source={require('../../assets/image/Icon-Notif.png')}
                   style={styles.secondSectionItemIcon}
                 />
-                <Text>Pop-up Notificaion</Text>
+                <Text style={styles.firstSectionCardText2}>Pop-up Notificaion</Text>
               </View>
+              <LinearGradient
+                  colors={['#C58BF2', '#EEA4CE' ]}
+                  style={{
+                    height:18,
+                    borderRadius:12
+                  }}
+                  start={{ x: 1, y: 1 }}
+                >
               <Switch
                 value={switchval}
                 onValueChange={(val)=>setSwitchval(val)}
@@ -167,7 +208,7 @@ const ProfileScreen = ({navigation})=>{
                 barHeight={18}
                 // barWidth={36}
                 circleBorderWidth={0}
-                backgroundActive={'#C58BF2'}
+                backgroundActive={'transparent'}
                 backgroundInactive={'rgba(170,170,170,1)'}
                 circleActiveColor={'rgba(255,255,255,1)'}
                 circleInActiveColor={'rgba(255,255,255,1)'}
@@ -182,9 +223,17 @@ const ProfileScreen = ({navigation})=>{
                 switchWidthMultiplier={2.6} // multiplied by the `circleSize` prop to calculate total width of the Switch
                 switchBorderRadius={12} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
               />
+              </LinearGradient>
             </View>
           </View>
-          <View style={styles.forthSectionContainer}>
+          </View>
+          <View
+            style={{
+              paddingHorizontal:30,
+              paddingBottom:Constants.LAYOUT.BOTTOM_BAR_HEIGHT
+            }}
+          >
+          <View style={[styles.forthSectionContainer,styles.containershadow]}>
             <View>
               <Text style={styles.secondSectionTitle}>Other</Text>
             </View>
@@ -197,7 +246,7 @@ const ProfileScreen = ({navigation})=>{
                   source={require('../../assets/image/Icon-Message.png')}
                   style={styles.secondSectionItemIcon}
                 />
-                <Text>Contact Us</Text>
+                <Text style={styles.firstSectionCardText2}>Contact Us</Text>
               </View>
               <Image
                 source={require('../../assets/image/ArrowRight2.png')}
@@ -213,7 +262,7 @@ const ProfileScreen = ({navigation})=>{
                   source={require('../../assets/image/Icon-Privacy.png')}
                   style={styles.secondSectionItemIcon}
                 />
-                <Text>Privacy Policy</Text>
+                <Text style={styles.firstSectionCardText2}>Privacy Policy</Text>
               </View>
               <Image
                 source={require('../../assets/image/ArrowRight2.png')}
@@ -229,7 +278,7 @@ const ProfileScreen = ({navigation})=>{
                 source={require('../../assets/image/Icon-Setting.png')}
                 style={styles.secondSectionItemIcon}
               />
-              <Text>Settings</Text>
+              <Text style={styles.firstSectionCardText2}>Settings</Text>
               </View>
               <Image
                 source={require('../../assets/image/ArrowRight2.png')}
@@ -237,7 +286,11 @@ const ProfileScreen = ({navigation})=>{
               />
             </TouchableOpacity>
           </View>
-      </ScrollView>
+          </View>
+          
+
+        </ScrollView>
+      </View>
     )
 }
 
@@ -245,11 +298,12 @@ const styles = StyleSheet.create({
   container:{
     flex:1,
     backgroundColor:'white',
-    paddingHorizontal:25,
+    
   },
   firstSectionContainer:{
     flexDirection:'column',
     height:135,
+    paddingHorizontal:30,
   },
   firstSectionHeader:{
     flexDirection:'row',
@@ -269,8 +323,8 @@ const styles = StyleSheet.create({
     marginLeft:10
   },
   firstSectionUserName:{
-    fontSize:14,
-    fontWeight:'700',
+    fontSize:Constants.FONT_SIZE.FT14,
+    fontFamily:Constants.FONT_FAMILY.PRIMARY_MEDIUM,
     color:'black'
   },
   firstSectionEditButton:{
@@ -283,13 +337,14 @@ const styles = StyleSheet.create({
   },
   firstSectionEditText:{
     color:'white',
-    fontSize:12,
-    fontWeight:'700',
+    fontSize:Constants.FONT_SIZE.FT12,
+    fontFamily:Constants.FONT_FAMILY.PRIMARY_MEDIUM
   },
   firstSectionDetailContainer:{
     flexDirection:'row',
     height:65,
-    justifyContent:'space-between'
+    justifyContent:'space-between',
+    marginTop:20
   },
   firstSectionCard:{
     borderRadius:16,
@@ -309,24 +364,28 @@ const styles = StyleSheet.create({
   },
   firstSectionCardText1:{
     color:'#92A3FD',
-    fontSize:14,
-    fontWeight:'700',
+    fontSize:Constants.FONT_SIZE.FT14,
+    fontFamily:Constants.FONT_FAMILY.PRIMARY_MEDIUM,
     marginBottom:7
   },
   firstSectionCardText2:{
     color:'#7B6F72',
-    fontSize:12,
-    fontWeight:'700'
+    fontSize:Constants.FONT_SIZE.FT12,
+    fontFamily:Constants.FONT_FAMILY.PRIMARY_REGULAR
   },
   secondSectionContainer:{
     height:189,
-    justifyContent:'space-around',
-    borderRadius:16
+    justifyContent:'space-evenly',
+    borderRadius:16,
+    marginTop:30,
+    marginBottom:15,
+    paddingHorizontal:20,
   },
   secondSectionTitle:{
-    fontSize:16,
-    fontWeight:'bold',
-    color:'black'
+    fontSize:Constants.FONT_SIZE.FT16,
+    fontFamily:Constants.FONT_FAMILY.PRIMARY_SEMI,
+    color:'black',
+    
   },
   secondSectionItem:{
     flexDirection:'row',
@@ -347,11 +406,30 @@ const styles = StyleSheet.create({
   },
   thirdSectionContainer:{
     height:99,
-    justifyContent:'space-evenly'
+    justifyContent:'space-evenly',
+    paddingHorizontal:20,
+    marginBottom:15
   },
   forthSectionContainer:{
     height:159,
-    justifyContent:'space-evenly'
+    justifyContent:'space-evenly',
+    paddingHorizontal:20,
+    // marginBottom
+  },
+  containershadow:{
+    shadowColor: "black",
+    shadowOffset: {
+      width: 0,
+      height: 18,
+    },
+    shadowOpacity:  0.25,
+    shadowRadius: 20.00,
+    elevation: 24,
+    backgroundColor: 'white',
+    borderRadius:35
+  },
+  itemText:{
+    
   }
 })
 

@@ -58,6 +58,7 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets
 } from 'react-native-safe-area-context'
+import LinearGradient from 'react-native-linear-gradient'
 
 /** */
 import ProfileScreen from './src/profile/Profile';
@@ -218,6 +219,7 @@ function NavigatorTab() {
                   height: 80 + insets.bottom,
               }}>
               {/* <View style={{ height: 80 }}> */}
+              
                   <TouchableOpacity
                       onPress={() => {
                           navigation.navigate(target);
@@ -231,17 +233,40 @@ function NavigatorTab() {
 
                       {
                         target=='TabSearch' ?
-                          <View 
-                            style={{
-                              alignItems: 'center',
+                        
+                          // <View 
+                          //   style={{
+                          //     alignItems: 'center',
+                          //     width:60,
+                          //     height:60,
+                          //     backgroundColor:'#92A3FD',
+                          //     justifyContent:'center',
+                          //     borderRadius:60/2,
+                          //     marginBottom:75
+                          //   }}
+                          // >
+                            <LinearGradient
+                              colors={['#92A3FD', '#9DCEFF' ]}
+                              style={{
                               width:60,
-                              height:60,
-                              backgroundColor:'#92A3FD',
+                              alignItems: 'center',
                               justifyContent:'center',
+                              height:60,
                               borderRadius:60/2,
-                              marginBottom:75
-                            }}
-                          >
+                              marginBottom:75,
+                              shadowColor: "black",
+                              shadowOffset: {
+                                width: 0,
+                                height: 5,
+                              },
+                              shadowOpacity:  0.25,
+                              shadowRadius: 20.00,
+                              elevation: 4,
+                              // backgroundColor: 'white',
+                              // borderRadius:35
+                              }}
+                              start={{ x: 1, y: 1 }}
+                            >
                             <Image
                                 style={{
                                     // marginTop: 0,
@@ -255,8 +280,8 @@ function NavigatorTab() {
                                 }}
                                 source={icon}
                             />
-                            
-                          </View>
+                            </LinearGradient>
+                          // </View>
                           :
                           <View style={{ alignItems: 'center' }}>
                             <Image
@@ -286,6 +311,7 @@ function NavigatorTab() {
                           </View>
                       }
                   </TouchableOpacity>
+                
               {/* </View> */}
           </View>
       );
