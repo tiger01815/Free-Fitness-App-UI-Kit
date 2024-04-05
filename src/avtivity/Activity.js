@@ -6,11 +6,12 @@ import {
     StyleSheet,
     TouchableOpacity,
     TouchableWithoutFeedback,
-    Modal
+    Modal,
+    ScrollView
 } from 'react-native';
 import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
 import LinearGradient from 'react-native-linear-gradient'
-
+import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
 import TargetAddScreen from './TargetAdd';
 import CommonHeader from '../common/CommonHeader';
@@ -20,12 +21,25 @@ import Constants from '../common/Constants';
 const ActivityScreen = ({navigation})=>{
     const onBackPress = ()=>navigation.goBack();
     const onMenuPress = () => navigation.openDrawer()
+    const insets = useSafeAreaInsets();
+    const [menuVisible, setMenuVisible] = useState([false,false]);
+
+    const toggleVisible = (index) => {
+        // Create a copy of the original array
+        const updatedItems = [...menuVisible];
+        
+        // Update the specific element in the copied array
+        updatedItems[index] = !updatedItems[index];
     
-    const [menuVisible, setMenuVisible] = useState(false);
-    const toggleVisible =()=> setMenuVisible(!menuVisible);
+        // Set the state with the updated array
+        setMenuVisible(updatedItems);
+      };
+    // const toggleVisible 0=()=> setMenuVisible(!menuVisible);
     
     const [activityViewMode, setActivityViewMode] = useState(false)
+    const togggleActivityMode=()=>setActivityViewMode(!activityViewMode)
     const [targetAddModal, setTargetAddModal] = useState(false);
+    const toggletargeAddModal = ()=>setTargetAddModal(!targetAddModal);
     return(
         <View
             style={{
@@ -37,7 +51,7 @@ const ActivityScreen = ({navigation})=>{
         >
             <CommonHeader
                 title={'Activity Tracker'}
-                backenable={true}
+                // backenable={}
                 onBackPress={onBackPress}
                 onMenuPress={onMenuPress}
             />
@@ -46,8 +60,15 @@ const ActivityScreen = ({navigation})=>{
                 <SuccessModal
                     title={'test'}
                     content={'test'}
+                    onClosePress={toggletargeAddModal}
                 />
             }
+            <View
+                style={{paddingBottom:Constants.LAYOUT.BOTTOM_BAR_HEIGHT+insets.bottom,flex:1}}
+            >
+            <ScrollView
+                style={styles.container}
+            >
             <View
                 style={{
                     paddingHorizontal:30
@@ -97,69 +118,43 @@ const ActivityScreen = ({navigation})=>{
             </View>
             <View
                 style={{
-                    paddingHorizontal:30
+                    paddingHorizontal:30,
+                    marginTop:10
                 }}
             >
                 <View style={styles.secondSection}>
                     <View style={styles.secondSectionHead}>
                         <Text style={styles.sectionheaderTitle}>Activity Progress</Text>
-                        <TouchableOpacity onPress={()=>setActivityViewMode(!activityViewMode)} style={styles.sectionheaderDropdown}>
-                            <Text 
-                                style={{
-                                    fontSize:10,
-                                    fontWeight:'500',
-                                    color:'white'
-                                }}
-                            >
-                                Weekly
-                            </Text>
-                            {activityViewMode?<Image
-                                source={require('../../assets/image/ArrowDown2.png')}
-                                style={{
-                                    transform: [
-                                        { scaleX:-1}
-                                    ]
-                                }}
-                            />:
-                            <Image
-                            source={require('../../assets/image/ArrowDown2.png')
-                            }
-                        />}
-                            {activityViewMode &&
-                                    <View style={ styles.secondSectionViewMode}>
-                                        <Text onPress={()=>console.log(1)} style={styles.secontSectionViewModeItem}>Dayily</Text>
-                                        <Text style={styles.secontSectionViewModeItem}>Weekly</Text>
-                                        <Text style={styles.secontSectionViewModeItem}>Monthly</Text>
-                                    </View>}
-                            
-                        </TouchableOpacity>
-                        {activityViewMode && (
-                            <Modal
-                                transparent
-                                style={{flex:1}}
-                            >
-                                <TouchableWithoutFeedback
-                                    onPress={() => { setActivityViewMode(false) }
-                                    }
-                                >
-                                    <View 
-                                        style={{
-                                            flex: 1,
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-                                    </View>
-                                </TouchableWithoutFeedback>
-                                    {/* <View style={ styles.secondSectionViewMode}>
-                                        <Text style={styles.secontSectionViewModeItem}>Dayily</Text>
-                                        <Text style={styles.secontSectionViewModeItem}>Weekly</Text>
-                                        <Text style={styles.secontSectionViewModeItem}>Monthly</Text>
-                                    </View> */}
-                            
-                            </Modal>
-                        )
-                        }
+                        <Menu
+                            visible={activityViewMode}
+                            anchor={
+                                    
+                                        <LinearGradient
+                                            colors={['#A192FD', '#9DCEFF' ]}
+                                            style={styles.sectionheaderDropdown}
+                                            start={{ x: 1, y: 1 }}
+                                            onPress={()=>togggleActivityMode()}
+                                        >
+                                            <TouchableOpacity 
+                                                onPress={()=>togggleActivityMode()} 
+                                                style={styles.sectionheaderDropdown}
+                                            >
+                                                <Text style={{fontSize:10,fontWeight:'500',color:'white'}}>Weekly</Text>
+                                                <Image source={require('../../assets/image/ArrowDown2.png')}/>
+                                            </TouchableOpacity>
+                                        </LinearGradient>
+                                }
+                            onRequestClose={togggleActivityMode}
+                            style={{
+                                borderRadius:10,
+                                width:76,
+                                backgroundColor:'#92A3FD'
+                            }}
+                        >
+                            <MenuItem onPress={togggleActivityMode}>Weekly</MenuItem>
+                            <MenuItem onPress={togggleActivityMode}>Dayily</MenuItem>
+                            <MenuItem onPress={togggleActivityMode}>Monthly</MenuItem>
+                        </Menu>
                     </View>
                     <View
                         style={[styles.secondSectonBarcontainer,styles.containershadow]}
@@ -181,7 +176,6 @@ const ActivityScreen = ({navigation})=>{
                                 style={[styles.secondsectionbar,{height:98}]}
                                 start={{ x: 1, y: 1 }}
                             />
-                            {/* <View style={[styles.secondsectionbar,{backgroundColor:'#C58BF2',height:79}]}/> */}
                         </View>
                         <Text style={styles.secondSectionbarDate}>Mon</Text>
                         </View>
@@ -202,7 +196,6 @@ const ActivityScreen = ({navigation})=>{
                                 style={[styles.secondsectionbar,{height:85}]}
                                 start={{ x: 1, y: 1 }}
                             />
-                            {/* <View style={[styles.secondsectionbar,{backgroundColor:'#C58BF2',height:36}]}/> */}
                         </View>
                         <Text style={styles.secondSectionbarDate}>Wed</Text>
                         </View>
@@ -224,7 +217,6 @@ const ActivityScreen = ({navigation})=>{
                                 style={[styles.secondsectionbar,{height:39}]}
                                 start={{ x: 1, y: 1 }}
                             />
-                            {/* <View style={[styles.secondsectionbar,{backgroundColor:'#C58BF2',height:68}]}/> */}
                         </View>
                         <Text style={styles.secondSectionbarDate}>Fri</Text>
                         </View>
@@ -273,24 +265,22 @@ const ActivityScreen = ({navigation})=>{
                         </View>
                         <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
                             <Menu
-                                visible={menuVisible}
+                                visible={menuVisible[0]}
                                 
                                 anchor={
                                     <TouchableOpacity
-                                        onPress={()=>toggleVisible()}
+                                        onPress={()=>toggleVisible(0)}
                                     >
                                         <Image
                                             source={require('../../assets/image/more-vertical5.png')}
                                         />
                                     </TouchableOpacity>
                                 }
-                                onRequestClose={toggleVisible}
+                                onRequestClose={()=>toggleVisible(0)}
                             >
-                                <MenuItem onPress={toggleVisible}>Menu item 1</MenuItem>
-                                <MenuItem onPress={toggleVisible}>Menu item 2</MenuItem>
-                                <MenuItem disabled>Disabled item</MenuItem>
+                                <MenuItem onPress={()=>toggleVisible(0)}>Item1-option1</MenuItem>
                                 <MenuDivider />
-                                <MenuItem onPress={toggleVisible}>Menu item 4</MenuItem>
+                                <MenuItem onPress={()=>toggleVisible(0)}>Item1-option2</MenuItem>
                             </Menu>
                         </View>
                     </TouchableOpacity>
@@ -310,29 +300,29 @@ const ActivityScreen = ({navigation})=>{
                         </View>
                         <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
                             <Menu
-                                visible={menuVisible}
+                                visible={menuVisible[1]}
                                 
                                 anchor={
                                     <TouchableOpacity
-                                        onPress={()=>toggleVisible()}
+                                        onPress={()=>toggleVisible(1)}
                                     >
                                         <Image
                                             source={require('../../assets/image/more-vertical5.png')}
                                         />
                                     </TouchableOpacity>
                                 }
-                                onRequestClose={toggleVisible}
+                                onRequestClose={()=>toggleVisible(1)}
                             >
-                                <MenuItem onPress={toggleVisible}>Menu item 1</MenuItem>
-                                <MenuItem onPress={toggleVisible}>Menu item 2</MenuItem>
-                                <MenuItem disabled>Disabled item</MenuItem>
+                                <MenuItem onPress={()=>toggleVisible(1)}>Item2-option1</MenuItem>
                                 <MenuDivider />
-                                <MenuItem onPress={toggleVisible}>Menu item 4</MenuItem>
+                                <MenuItem disabled>Disabled item2</MenuItem>
                             </Menu>
                         </View>
                     </TouchableOpacity>
                 </View>
             </View>
+            </View>
+            </ScrollView>
             </View>
         </View>
     )
@@ -341,6 +331,10 @@ const ActivityScreen = ({navigation})=>{
 export default ActivityScreen;
 
 const styles = StyleSheet.create({
+    container:{
+        backgroundColor:'white',
+        flex:1
+    },
     sectioncontainer:{
         height:139,
         backgroundColor:'#9AC2FE',
@@ -412,7 +406,8 @@ const styles = StyleSheet.create({
     secondSectonBarcontainer:{
         flexDirection:'row',
         justifyContent:'space-evenly',
-        borderRadius:20
+        borderRadius:20,
+        paddingVertical:10
     },
     secondSectionbarDate:{
         fontSize:12,

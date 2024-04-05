@@ -41,7 +41,11 @@ const CommonHeader = ({title, backenable, onBackPress=null,onMenuPress=null})=>{
           style={{
             fontSize:Constants.FONT_SIZE.FT26,
             fontFamily:Constants.FONT_FAMILY.PRIMARY_BOLD,
-            color:'black'
+            color:'black',
+            textAlign:'center',
+            alignItems:'center',
+            justifyContent:'center',
+            alignSelf:'center'
           }}
         >
           {title}

@@ -30,7 +30,7 @@ const ProfileScreen = ({navigation})=>{
       <StatusBar barStyle={Platform.OS == 'ios' ? 'dark-content' : 'dark-content'} backgroundColor={Constants.COLOR.WHITE} />
       <CommonHeader
               title={'Profile'}
-              backenable={true}
+              // backenable={true}
               onBackPress={onBackPress}
               onMenuPress={onMenuPress}
       />
@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
     height:65,
     justifyContent:'center',
     alignItems:'center',
-    shadowColor: "black",
+    shadowColor: "#a7a4a4",
     shadowOffset: {
       width: 0,
       height: 18,

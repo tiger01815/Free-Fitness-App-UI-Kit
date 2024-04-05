@@ -12,8 +12,32 @@ import {
     TextInput
 } from 'react-native';
 import Constants from '../common/Constants';
+import {Menu,MenuItem,MenuDivider} from 'react-native-material-menu'
+import StyledTextInput from '../common/StyledTextInput';
 
 const SuccessModal = ({ title, content = '', insets, onClosePress }) => {
+    const [menuVisible, setMenuVisible] = useState(false)
+    const toggleVisible=()=>setMenuVisible(!menuVisible);
+    const phoneRef = useRef();
+    const [phone, setPhone] = useState('')
+    
+    useEffect(() => {
+        const showSubscription = Keyboard.addListener("keyboardWillShow", (event) => keyboardDidShow(event));
+        const hideSubscription = Keyboard.addListener("keyboardWillHide", (event) => keyboardDidHide(event));
+        return () => {
+            showSubscription.remove();
+            hideSubscription.remove();
+        }
+    }, []);
+    const keyboardDidShow = (event) => {
+        let height = event.endCoordinates.height;
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        // setKeyboardHeight(height)
+    }
+    const keyboardDidHide = (event) => {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        // setKeyboardHeight(0)
+    }
 
     return (
         
@@ -24,33 +48,83 @@ const SuccessModal = ({ title, content = '', insets, onClosePress }) => {
                     <View
                         style={styles.modalHeader}
                     >
+                        <TouchableOpacity
+                            onPress={()=>onClosePress()}
+                        >
                         <Image
                             source={require('../../assets/image/Close-Icon.png')}
+                            style={{
+                                height:20,
+                                width:20
+                            }}
                         />
-                        <Text>Activity</Text>
+                        </TouchableOpacity>
+                        <Text
+                            style={{
+                                fontSize:Constants.FONT_SIZE.FT24
+                            }}
+                        >Activity</Text>
                         <Image
                             source={require('../../assets/image/More-Icon.png')}
                         />
                     </View>
-                    {/* <Image style={{ position: 'absolute', top: -30, width: 111, height: 87, resizeMode: 'contain' }} source={require('../../assets/images/ic_logo_membership.png')} /> */}
-                    <View>
-                        <Text></Text>
-                    </View>
-                    <Text style={{ textAlign: 'center', marginTop: 86, fontFamily: Constants.FONT_FAMILY.PRIMARY_BOLD, fontSize: Constants.FONT_SIZE.FT24, color: Constants.COLOR.BLACK }}>
-                        {title}
-                    </Text>
-                    {
-                        content !== '' &&
-                        <Text style={{ marginTop: 12, lineHeight: 30, textAlign: 'center', fontFamily: Constants.FONT_FAMILY.PRIMARY_REGULAR, fontSize: Constants.FONT_SIZE.FT24, color: Constants.COLOR.BLACK }}>
-                            {content}
+                    {/* <View>
+                        <Menu
+                            visible={menuVisible}
+                            anchor={
+                                <TouchableOpacity
+                                onPress={()=>toggleVisible()}
+                            >
+                            <Image
+                                style={{
+                                width:32,
+                                height:32
+                                }}
+                                source={require('../../assets/image/Detail-Navs.png')}
+                            />
+                            </TouchableOpacity>
+                            }
+                            onRequestClose={toggleVisible}
+                        >
+                            <MenuItem onPress={toggleVisible}>Menu item 1</MenuItem>
+                            <MenuItem onPress={toggleVisible}>Menu item 2</MenuItem>
+                        </Menu>
+                        <View>
+                        <StyledTextInput
+                        ref={phoneRef}
+                        type={"cel-phone"}
+                        keyboardType={'phone-pad'}
+                        containerStyle={{ marginTop: 20 }}
+                        placeholder={"AMount"}
+                        value={phone}
+                        onChangeText={(text) => setPhone(text)} />
+                        </View>
+                    </View> */}
+                   <View
+                    style={{
+                        flexDirection:'row',
+                        justifyContent:'space-around',
+                        width:Constants.LAYOUT.SCREEN_WIDTH - 60,
+        paddingHorizontal:30
+                    }}
+                   >
+                    <TouchableOpacity
+                        onPress={()=>onClosePress()}
+                    >
+                        <Text style={{ marginTop: 12,textAlign: 'center', fontFamily: Constants.FONT_FAMILY.PRIMARY_REGULAR, fontSize: Constants.FONT_SIZE.FT18, color: Constants.COLOR.BLACK }}>
+                            OK
                         </Text>
-                    }
-                    {/* <StyledButton
-                        containerStyle={{ width: Constants.LAYOUT.SCREEN_WIDTH - 120, height: 52, marginTop: 24 }}
-                        textStyle={{}}
-                        title={"OK"}
-                        onPress={onClosePress} 
-                    /> */}
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={()=>onClosePress()}
+                    >
+                        <Text style={{ marginTop: 12, textAlign: 'center', fontFamily: Constants.FONT_FAMILY.PRIMARY_REGULAR, fontSize: Constants.FONT_SIZE.FT18, color: Constants.COLOR.BLACK }}>
+                            Cancel
+                        </Text>
+                    </TouchableOpacity>
+                   
+                    </View> 
+                        
                 </View>
             </View >
         </Modal>
@@ -73,8 +147,9 @@ const styles = StyleSheet.create({
     modalHeader:{
         flexDirection:'row',
         justifyContent:'space-between',
-        width:Constants.LAYOUT.SCREEN_WIDTH - 60
-
+        width:Constants.LAYOUT.SCREEN_WIDTH - 60,
+        paddingHorizontal:30,
+        alignItems:'center'
     }
 })
 
