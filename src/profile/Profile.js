@@ -408,16 +408,17 @@ const styles = StyleSheet.create({
     height:99,
     justifyContent:'space-evenly',
     paddingHorizontal:20,
-    marginBottom:15
+    marginBottom:15,
+    borderRadius:20
   },
   forthSectionContainer:{
     height:159,
     justifyContent:'space-evenly',
     paddingHorizontal:20,
-    // marginBottom
+    borderRadius:20
   },
   containershadow:{
-    shadowColor: "black",
+    shadowColor: "#a7a4a4",
     shadowOffset: {
       width: 0,
       height: 18,
@@ -426,7 +427,7 @@ const styles = StyleSheet.create({
     shadowRadius: 20.00,
     elevation: 24,
     backgroundColor: 'white',
-    borderRadius:35
+    // borderRadius:35
   },
   itemText:{
     

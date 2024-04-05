@@ -65,9 +65,9 @@ const CommonHeader = ({title, backenable, onBackPress=null,onMenuPress=null})=>{
       >
           <MenuItem onPress={toggleVisible}>Menu item 1</MenuItem>
           <MenuItem onPress={toggleVisible}>Menu item 2</MenuItem>
-          <MenuItem disabled>Disabled item</MenuItem>
-          <MenuDivider />
-          <MenuItem onPress={toggleVisible}>Menu item 4</MenuItem>
+          {/* <MenuItem disabled>Disabled item</MenuItem> */}
+          {/* <MenuDivider /> */}
+          {/* <MenuItem onPress={toggleVisible}>Menu item </MenuItem> */}
       </Menu>
         
       </View>
