@@ -9,7 +9,7 @@ import {
 import Constants from '../common/Constants';
 import  {AnimatedGradient}  from "../common/AnimatedGradient";
 
-const OnboardingGetStartScreen=()=>{
+const OnboardingGetStartScreen=({navigation})=>{
     const animation1 = useRef(new Animated.Value(0)).current;
     const animation = useRef(new Animated.Value(0)).current
     const [colors1, setColors1] = useState(["white", "white"]);
@@ -66,7 +66,7 @@ const OnboardingGetStartScreen=()=>{
                             justifyContent:'center'
                         }}
                     >
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=>navigation.navigate('OnboardingTrackYourGoal')}>
                             <AnimatedGradient
                                 colors={buttoncolors}
                                 start={{ x: 1, y: 1 }}

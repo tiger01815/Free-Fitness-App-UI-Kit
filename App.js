@@ -82,8 +82,15 @@ import HomeScreen from './src/home/Home';
 import SearchScreen from './src/search/Search';
 //Onboarding
 import OnboardingGetStartScreen from './src/onboarding/OnboardingGetStartScreen';
+import OnboardingTrackYourGoalScreen from './src/onboarding/OnboardingTrackYourGoal'
+import OnboardingGetBurnScreen from './src/onboarding/OnboardingGetBurn';
+import OnbordingEatWellScreen from './src/onboarding/OnbordingEatWell';
+import OnboardingImproveSleepScreen from './src/onboarding/OnboardingImproveSleep';
 
+//auth
+import CreatPasswordScreen from './src/auth/CreatPassword';
 
+//constant
 import Constants from './src/common/Constants';
 
 const Stack = createNativeStackNavigator()
@@ -230,8 +237,36 @@ function Onboarding(){
         name='OnboardingStart'
         component={OnboardingGetStartScreen}
       />
+      <Stack.Screen
+        key={'OnboardingTrackYourGoal'}
+        name='OnboardingTrackYourGoal'
+        component={OnboardingTrackYourGoalScreen}
+      />
+      <Stack.Screen
+        key={'OnboardingGetBurn'}
+        name='OnboardingGetBurn'
+        component={OnboardingGetBurnScreen}
+      />
+      <Stack.Screen
+        key={'OnbordingEatWell'}
+        name='OnbordingEatWell'
+        component={OnbordingEatWellScreen}
+      />
+      <Stack.Screen
+        key={'OnboardingImproveSleep'}
+        name='OnboardingImproveSleep'
+        component={OnboardingImproveSleepScreen}
+      />
+      <Stack.Screen
+        name={'NavigatorTab'}
+        component={NavigatorTab}
+      />
     </Stack.Navigator>
   )
+}
+
+function auth(){
+  return
 }
 
 function NavigatorTab() {
@@ -694,7 +729,7 @@ function NavigatorDrawer(){
           width:Constants.LAYOUT.SCREEN_WIDTH-100
         }
       }}
-      initialRouteName={'OnboardingStart'}
+      initialRouteName={'OnboardingStartDrawer'}
       drawerContent={props => <CustomDrawerContent {...props}/>}
     >
       <Drawer.Screen
@@ -705,9 +740,9 @@ function NavigatorDrawer(){
         name={'on'}
       /> */}
       <Drawer.Screen
-        key={'OnboardingStart'}
-        name='OnboardingStart'
-        component={OnboardingGetStartScreen}
+        key={'OnboardingStartDrawer'}
+        name='OnboardingStartDrawer'
+        component={Onboarding}
       />
       {/* <Drawer.Screen
        key={'Search'}
