@@ -132,6 +132,7 @@ export default {
         FT38: Dimensions.get('window').width <= 375 ? 38 : 38,
         FT40: Dimensions.get('window').width <= 375 ? 40 : 40,
         FT48: Dimensions.get('window').width <= 375 ? 48 : 48,
+        FT50: Dimensions.get('window').width <= 375 ? 50 : 50,
         FT64: Dimensions.get('window').width <= 375 ? 64 : 64,
 
     }

@@ -60,15 +60,9 @@ import {
 } from 'react-native-safe-area-context'
 import LinearGradient from 'react-native-linear-gradient'
 
-/** */
+//Profile
 import ProfileScreen from './src/profile/Profile';
 import ProfileEditScreen from './src/profile/ProfileEdit';
-import CameraScreen from './src/camera/Camera';
-import ActivityScreen from './src/avtivity/Activity';
-import MoreActivityScreen from './src/avtivity/MoreActivity';
-import ActivityDetailScreen from './src/avtivity/ActivityDetail';
-import HomeScreen from './src/home/Home';
-import SearchScreen from './src/search/Search';
 import AchievementScreen from './src/profile/Achievement';
 import ActivityHistoryScreen from './src/profile/ActivityHostory';
 import ContactUsScreen from './src/profile/ContactUs';
@@ -76,6 +70,20 @@ import PersonalDataScreen from './src/profile/PersonalData';
 import PrivacyPolicyScreen from './src/profile/PrivacyPolicy';
 import SettingsScreen from './src/profile/Settings';
 import WorkoutProgressScreen from './src/profile/WorkoutProgress';
+//Camera
+import CameraScreen from './src/camera/Camera';
+//Activity
+import ActivityScreen from './src/avtivity/Activity';
+import MoreActivityScreen from './src/avtivity/MoreActivity';
+import ActivityDetailScreen from './src/avtivity/ActivityDetail';
+//Home
+import HomeScreen from './src/home/Home';
+//Search
+import SearchScreen from './src/search/Search';
+//Onboarding
+import OnboardingGetStartScreen from './src/onboarding/OnboardingGetStartScreen';
+
+
 import Constants from './src/common/Constants';
 
 const Stack = createNativeStackNavigator()
@@ -204,6 +212,23 @@ function TabCamera(){
         key={'Camera'}
         name='Camera'
         component={CameraScreen}
+      />
+    </Stack.Navigator>
+  )
+}
+
+function Onboarding(){
+  return(
+    <Stack.Navigator
+      initialRouteName='OnboardingStart'
+      screenOptions={{
+        headerShown:false
+      }}
+    >
+      <Stack.Screen
+        key={'OnboardingStart'}
+        name='OnboardingStart'
+        component={OnboardingGetStartScreen}
       />
     </Stack.Navigator>
   )
@@ -579,6 +604,7 @@ function NavigatorTab() {
   );
 }
 
+
 function NavigatorDrawer(){
   function CustomDrawerContent(props){
     const MenuItem = ({icon,title,onPress})=>{
@@ -668,18 +694,26 @@ function NavigatorDrawer(){
           width:Constants.LAYOUT.SCREEN_WIDTH-100
         }
       }}
-      initialRouteName={'NavigatorTab'}
+      initialRouteName={'OnboardingStart'}
       drawerContent={props => <CustomDrawerContent {...props}/>}
     >
       <Drawer.Screen
        name={'NavigatorTab'}
        component={NavigatorTab}
       />
+      {/* <Drawer.Screen
+        name={'on'}
+      /> */}
       <Drawer.Screen
+        key={'OnboardingStart'}
+        name='OnboardingStart'
+        component={OnboardingGetStartScreen}
+      />
+      {/* <Drawer.Screen
        key={'Search'}
        name='Search'
        component={SearchScreen}
-      />
+      /> */}
     </Drawer.Navigator>
 
   )

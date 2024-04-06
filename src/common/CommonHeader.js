@@ -39,6 +39,7 @@ const CommonHeader = ({title, backenable, onBackPress=null,onMenuPress=null})=>{
         </TouchableOpacity>
         <Text
           style={{
+            marginLeft:30,
             fontSize:Constants.FONT_SIZE.FT26,
             fontFamily:Constants.FONT_FAMILY.PRIMARY_BOLD,
             color:'black',

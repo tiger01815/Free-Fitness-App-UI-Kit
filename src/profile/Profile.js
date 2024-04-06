@@ -1,4 +1,4 @@
-import react,{useState} from 'react';
+import react,{useState,useRef} from 'react';
 import {
     Text,
     View,
@@ -12,28 +12,63 @@ import {
 import { Shadow } from 'react-native-shadow-2';
 import { Switch } from 'react-native-switch';
 import LinearGradient from 'react-native-linear-gradient';
+import Dialog  from 'react-native-dialog';
 
+import StyledTextInput from '../common/StyledTextInput';
 import Constants from '../common/Constants';
 import CommonHeader from '../common/CommonHeader';
+
 const ProfileScreen = ({navigation})=>{
     const onBackPress =()=> navigation.goBack();
     const onMenuPress = () => navigation.openDrawer()
-    // let switchval = true;
-    const [switchval, setSwitchval] = useState(true);
+    const phoneRef = useRef();
+    const [phone, setPhone] = useState('')
+    const [userName, setUserName] = useState('Stefani Wong');
+    const [userRole, setUserRole] = useState('Lose a Fat Program');
+    const [userHeight, setUserHeight] = useState('180');
+    const [userWeight, setUserWeight] = useState('65');
+    const [userAge, setUserAge] = useState('22');
+    const userNameRef = useRef()
+    const userRoleRef = useRef();
+    const userHeightRef = useRef();
+    const userWeightRef = useRef();
+    const userAgeRef = useRef();
 
-    return(<View
-            style={{
-              flex:1,
-              backgroundColor:'white'
-            }}
-          >
-      <StatusBar barStyle={Platform.OS == 'ios' ? 'dark-content' : 'dark-content'} backgroundColor={Constants.COLOR.WHITE} />
-      <CommonHeader
-              title={'Profile'}
-              // backenable={true}
-              onBackPress={onBackPress}
-              onMenuPress={onMenuPress}
-      />
+    const [switchval, setSwitchval] = useState(true);
+    const [visible, setVisible] = useState(false);
+
+    const showDialog = () => {
+      setVisible(true);
+    };
+  
+    const handleCancel = () => {
+      setVisible(false);
+      userNameRef.current.value && setUserName(userNameRef.current.value)
+      userRoleRef.current.value && setUserRole(userRoleRef.current.value)
+      userHeightRef.current.value && setUserHeight(userHeightRef.current.value)
+      userWeightRef.current.value && setUserWeight(userWeightRef.current.value)
+      userAgeRef.current.value && setUserAge(userAgeRef.current.value)
+      
+    };
+    const handleDelete = () => {
+      // The user has pressed the "Delete" button, so here you can do your own logic.
+      // ...Your logic
+      setVisible(false);
+    };
+    return(
+        <View
+          style={{
+            flex:1,
+            backgroundColor:'white'
+          }}
+        >
+        <StatusBar barStyle={Platform.OS == 'ios' ? 'dark-content' : 'dark-content'} backgroundColor={Constants.COLOR.WHITE} />
+        <CommonHeader
+                title={'Profile'}
+                // backenable={true}
+                onBackPress={onBackPress}
+                onMenuPress={onMenuPress}
+        />
         <ScrollView style={styles.container}>
           
           <View style={styles.firstSectionContainer}>
@@ -43,16 +78,18 @@ const ProfileScreen = ({navigation})=>{
                 <Image style={styles.firstSectionAvatar} source={require('../../assets/image/Latest-Pic.png')}/>
                 </TouchableOpacity>
                 <View style={styles.firstSectionLeftUserInfo}>
-                  <Text style={styles.firstSectionUserName}>Stefani Wong</Text>
+                  <Text style={styles.firstSectionUserName}>{userName}</Text>
                   <Text style={{
                     fontFamily:Constants.FONT_FAMILY.PRIMARY_REGULAR,
                     fontSize:Constants.FONT_SIZE.FT12
-                  }}>Lose a Fat Program</Text>
+                  }}>{userRole}</Text>
                 </View>
               </View>
               <TouchableOpacity
                 style={styles.firstSectionEditButton}
-                onPress={()=>navigation.navigate('ProfileEdit')}
+                onPress={()=>{
+                  showDialog();
+                }}
               >
                 <LinearGradient
                   colors={['#92A3FD', '#9DCEFF' ]}
@@ -85,15 +122,15 @@ const ProfileScreen = ({navigation})=>{
                   }}
               > */}
                 <View style={styles.firstSectionCard}>
-                  <Text style={styles.firstSectionCardText1}>180cm</Text>
+                  <Text style={styles.firstSectionCardText1}>{userHeight+'cm'}</Text>
                   <Text style={styles.firstSectionCardText2}>Height</Text>
                 </View>
                 <View style={styles.firstSectionCard}>
-                  <Text style={styles.firstSectionCardText1}>65kg</Text>
+                  <Text style={styles.firstSectionCardText1}>{userWeight+'kg'}</Text>
                   <Text style={styles.firstSectionCardText2}>Weight</Text>
                 </View>
                 <View style={styles.firstSectionCard}>
-                  <Text style={styles.firstSectionCardText1}>22yo</Text>
+                  <Text style={styles.firstSectionCardText1}>{userAge+'yo'}</Text>
                   <Text style={styles.firstSectionCardText2}>Age</Text>
                 </View>
             </View>
@@ -288,8 +325,49 @@ const ProfileScreen = ({navigation})=>{
           </View>
           </View>
           
-
+          
         </ScrollView>
+        {
+          <Dialog.Container visible={visible} headerStyle={{height:0}}>
+            {/* <Dialog.Title>Edit</Dialog.Title> */}
+            {/* <Dialog.Description> */}
+              {/* <ScrollView style={{height:50}}> */}
+            <Dialog.Input
+              textInputRef={userNameRef} 
+              defaultValue={userName} 
+              onChangeText={(e) => userNameRef.current.value = e} 
+              label={"Name"}/>
+            <Dialog.Input 
+              textInputRef={userRoleRef} 
+              defaultValue={userRole}
+              multiline={true}
+              onChangeText={(e)=>userRoleRef.current.value = e}
+              label={'Role'}/>
+            <Dialog.Input 
+              textInputRef={userHeightRef} 
+              defaultValue={userHeight}
+              onChangeText={(e)=>userHeightRef.current.value = e}
+              keyboardType='number-pad'
+              label={'Height'}/>
+            <Dialog.Input 
+              textInputRef={userWeightRef}
+              defaultValue={userWeight}
+              keyboardType='number-pad'
+              onChangeText={(e)=>userWeightRef.current.value = e} 
+              label={"Weight"}/>
+            <Dialog.Input 
+              textInputRef={userAgeRef} 
+              defaultValue={userAge}
+              keyboardType='number-pad'
+              onChangeText={(e)=>userAgeRef.current.value = e}
+              label={"Age"}/>
+              {/* </ScrollView> */}
+            {/* </Dialog.Description> */}
+            
+            <Dialog.Button label="Ok" onPress={handleCancel} />
+            <Dialog.Button label="Cancel" onPress={handleDelete} />
+          </Dialog.Container>
+        }
       </View>
     )
 }
