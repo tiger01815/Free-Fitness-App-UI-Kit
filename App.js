@@ -88,7 +88,9 @@ import OnbordingEatWellScreen from './src/onboarding/OnbordingEatWell';
 import OnboardingImproveSleepScreen from './src/onboarding/OnboardingImproveSleep';
 
 //auth
-import CreatPasswordScreen from './src/auth/CreatPassword';
+// import CreatPasswordScreen from './src/auth/CreatPassword';
+import LogInScreen from './src/auth/LogIn';
+import LogInSuccessScreen from './src/auth/LogInSucces';
 
 //constant
 import Constants from './src/common/Constants';
@@ -265,8 +267,24 @@ function Onboarding(){
   )
 }
 
-function auth(){
-  return
+function Auth(){
+  return (
+    <Stack.Navigator
+      screenOptions={{headerShown:false}}
+      initialRouteName='login'
+    >
+      <Stack.Screen
+        key={'login'}
+        name='login'
+        component={LogInScreen}
+      />
+      <Stack.Screen
+        key={'loginsucces'}
+        name='loginsucces'
+        component={LogInSuccessScreen}
+      />
+    </Stack.Navigator>
+  )
 }
 
 function NavigatorTab() {
@@ -729,7 +747,7 @@ function NavigatorDrawer(){
           width:Constants.LAYOUT.SCREEN_WIDTH-100
         }
       }}
-      initialRouteName={'OnboardingStartDrawer'}
+      initialRouteName={'loginDrawer'}
       drawerContent={props => <CustomDrawerContent {...props}/>}
     >
       <Drawer.Screen
@@ -744,11 +762,11 @@ function NavigatorDrawer(){
         name='OnboardingStartDrawer'
         component={Onboarding}
       />
-      {/* <Drawer.Screen
-       key={'Search'}
-       name='Search'
-       component={SearchScreen}
-      /> */}
+      <Drawer.Screen
+       key={'loginDrawer'}
+       name='loginDrawer'
+       component={Auth}
+      />
     </Drawer.Navigator>
 
   )

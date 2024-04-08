@@ -5,7 +5,29 @@ import { TextInputMask } from 'react-native-masked-text';
 import moment from 'moment';
 // import DateTimePickerModal from './DateTimePickerModal';
 
-const StyledTextInput = forwardRef(({ type = 'default', format = 'MM', options, placeholder, label = '', editable = true, value, secureTextEntry = false, multiline = false, autoCapitalize = 'none', autoCorrect = false, keyboardType = 'default', returnKeyType = 'default', containerStyle, textStyle, onChangeText, onSubmitEditing, mode = undefined, minimumDate = null, maximumDate = null, defaultDate = null }, ref) => {
+const StyledTextInput = forwardRef(({ 
+    type = 'default', 
+    format = 'MM', 
+    options, 
+    placeholder, 
+    label = '', 
+    editable = true, 
+    value, 
+    secureTextEntry = false, 
+    multiline = false, 
+    autoCapitalize = 'none', 
+    autoCorrect = false, 
+    keyboardType = 'default', 
+    returnKeyType = 'default', 
+    containerStyle, 
+    textStyle, 
+    onChangeText, 
+    onSubmitEditing, 
+    mode = undefined, 
+    minimumDate = null, 
+    maximumDate = null, 
+    defaultDate = null 
+}, ref) => {
     const [visibleDatePicker, setVisibleDatePicker] = useState(false)
     return (
         <TouchableOpacity activeOpacity={1} onPress={() => {
