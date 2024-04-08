@@ -71,6 +71,7 @@ const CreatPasswordScreen = ({navigation})=>{
                             <TextInput 
                                 placeholder='Email' 
                                 style={styles.emailInputStyle}
+                                keyboardType='email-address'
                             />
                         </View>
                         <View style={styles.emailInputContainer}>
@@ -153,7 +154,7 @@ const CreatPasswordScreen = ({navigation})=>{
                             fontSize:Constants.FONT_SIZE.FT14
                             }}>
                                 Alerady have an account?
-                               <Text onPress={()=>navigation.navigate('login')} 
+                               <Text onPress={()=>navigation.navigate('profilestepone')} 
                                style={{color:'#DA98DF',
                                fontFamily:Constants.FONT_FAMILY.PRIMARY_REGULAR,
                                fontSize:Constants.FONT_SIZE.FT14

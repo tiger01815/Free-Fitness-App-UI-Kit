@@ -93,6 +93,7 @@ import LogInScreen from './src/auth/LogIn';
 import LogInSuccessScreen from './src/auth/LogInSucces';
 import CreatPasswordScreen from './src/auth/CreatPassword';
 import CompleteProfileStartScreen from './src/auth/CompleteProfile';
+import ProfileStepOneScreen from './src/auth/ProfileStepOne';
 
 //constant
 import Constants from './src/common/Constants';
@@ -294,6 +295,12 @@ function Auth(){
         key={'completeprofilestart'}
         name='completeprofilestart'
         component={CompleteProfileStartScreen}
+      />
+      
+      <Stack.Screen
+        key={'profilestepone'}
+        name='profilestepone'
+        component={ProfileStepOneScreen}
       />
     </Stack.Navigator>
   )

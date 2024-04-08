@@ -26,7 +26,9 @@ const CompleteProfileStartScreen = ({navigation})=>{
     const toggleVisible = ()=>setMenuVisible(!menuVisible);
     const [gender, setGender] = useState('')
     const [date,setDate] = useState(new Date());
-
+    const gonext=()=>{
+        navigation.navigate('profilestepone')
+    }
     // console.log(moment(date,'YYYY-MM-DD'))
     // let yourDate = new Date()
     // console.log(yourDate.toISOString().split('T')[0])
@@ -44,34 +46,35 @@ const CompleteProfileStartScreen = ({navigation})=>{
                 </View>
                 <Text style={styles.text1}>Let's complete your profile</Text>
                 <Text style={styles.text2}>It will help us to know ,more about you!</Text>
-                            <Menu
-                                visible={menuVisible}
-                                anchor={
-                                    <TouchableOpacity style={styles.emailInputContainer} >
-                                        <Image style={styles.inputIconStyle} source={require('../../assets/image/Lock.png')}/>
-                                        <TextInput 
-                                            placeholder='Choose Gender' 
-                                            style={styles.emailInputStyle}
-                                            editable={false}
-                                            value={gender}
-                                        />
-                                        <TouchableOpacity onPress={()=>toggleVisible()}>
-                                            <Image style={styles.inputIconStyle} source={require('../../assets/image/dropdownicon.png')}/>
-                                        </TouchableOpacity>
-                                    </TouchableOpacity>
-                                }
-                                onRequestClose={()=>toggleVisible()}
-                            >
-                                <MenuItem onPress={()=>{
-                                    toggleVisible();
-                                    setGender('Male')
-                                    }}>Male</MenuItem>
-                                <MenuDivider />
-                                <MenuItem onPress={()=>{
-                                    toggleVisible()
-                                    setGender('Female')
-                                    }}>Female</MenuItem>
-                            </Menu>
+                <Menu
+                    visible={menuVisible}
+                    anchor={
+                        <TouchableOpacity style={styles.emailInputContainer} onPress={()=>toggleVisible()}>
+                            <Image style={styles.inputIconStyle} source={require('../../assets/image/Lock.png')}/>
+                            <TextInput 
+                                placeholder='Choose Gender' 
+                                style={styles.emailInputStyle}
+                                editable={false}
+                                value={gender}
+                            />
+                            <TouchableOpacity >
+                                <Image style={styles.inputIconStyle} source={require('../../assets/image/dropdownicon.png')}/>
+                            </TouchableOpacity>
+                        </TouchableOpacity>
+                    }
+                    style={{width:Constants.LAYOUT.SCREEN_WIDTH-60}}
+                    onRequestClose={()=>toggleVisible()}
+                >
+                    <MenuItem onPress={()=>{
+                        toggleVisible();
+                        setGender('Male')
+                        }}>Male</MenuItem>
+                    <MenuDivider />
+                    <MenuItem onPress={()=>{
+                        toggleVisible()
+                        setGender('Female')
+                        }}>Female</MenuItem>
+                </Menu>
                     
                         
                         <TouchableOpacity style={styles.emailInputContainer} onPress={()=>setVisibleDatePicker(true)}>
@@ -104,6 +107,7 @@ const CompleteProfileStartScreen = ({navigation})=>{
                                     <TextInput 
                                         placeholder='Your Weight' 
                                         style={styles.emailInputStyle}
+                                        keyboardType='decimal-pad'
                                     />
 
                                 </View>
@@ -120,10 +124,11 @@ const CompleteProfileStartScreen = ({navigation})=>{
                         <View style={{flexDirection:'row',justifyContent:'space-between', marginBottom:20}}>
                             {/* <View style={{flexDirection:'row',alignItems:'center'}}> */}
                                 <View style={{flex:1 ,flexDirection:'row',borderRadius:14,justifyContent:'center',alignItems:'center',backgroundColor:'#F7F8F8',marginRi:20,paddingLeft:20}}>
-                                    <Image style={styles.inputIconStyle} source={require('../../assets/image/weightscale.png')}/>
+                                    <Image style={styles.inputIconStyle} source={require('../../assets/image/heightscale.png')}/>
                                     <TextInput 
-                                        placeholder='Your Weight' 
+                                        placeholder='Your Height' 
                                         style={styles.emailInputStyle}
+                                        keyboardType='decimal-pad'
                                     />
 
                                 </View>
@@ -133,12 +138,12 @@ const CompleteProfileStartScreen = ({navigation})=>{
                                         style={styles.gradiendbutton}
                                         start={{ x: 1, y: 1 }}
                                     >
-                                    <Text>KG</Text>
+                                    <Text>CM</Text>
                                     </LinearGradient>
                         </View>
 
                 </ScrollView>
-                <TouchableOpacity style={{width:'100%',marginBottom:40,paddingTop:20}} onPress={()=>register()}>
+                <TouchableOpacity style={{width:'100%',marginBottom:40,paddingTop:20}} onPress={()=>gonext()}>
                             <LinearGradient
                                 colors={['#A192FD', '#9DCEFF' ]}
                                 style={[styles.gradiendbutton,{width:'100%',height:60}]}
