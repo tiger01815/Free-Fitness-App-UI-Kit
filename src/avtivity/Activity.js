@@ -266,7 +266,6 @@ const ActivityScreen = ({navigation})=>{
                         <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
                             <Menu
                                 visible={menuVisible[0]}
-                                
                                 anchor={
                                     <TouchableOpacity
                                         onPress={()=>toggleVisible(0)}

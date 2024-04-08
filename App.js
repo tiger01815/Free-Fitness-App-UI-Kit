@@ -91,6 +91,8 @@ import OnboardingImproveSleepScreen from './src/onboarding/OnboardingImproveSlee
 // import CreatPasswordScreen from './src/auth/CreatPassword';
 import LogInScreen from './src/auth/LogIn';
 import LogInSuccessScreen from './src/auth/LogInSucces';
+import CreatPasswordScreen from './src/auth/CreatPassword';
+import CompleteProfileStartScreen from './src/auth/CompleteProfile';
 
 //constant
 import Constants from './src/common/Constants';
@@ -271,7 +273,7 @@ function Auth(){
   return (
     <Stack.Navigator
       screenOptions={{headerShown:false}}
-      initialRouteName='login'
+      initialRouteName='createpassword'
     >
       <Stack.Screen
         key={'login'}
@@ -282,6 +284,16 @@ function Auth(){
         key={'loginsucces'}
         name='loginsucces'
         component={LogInSuccessScreen}
+      />
+      <Stack.Screen
+        key={'createpassword'}
+        name='createpassword'
+        component={CreatPasswordScreen}
+      />
+      <Stack.Screen
+        key={'completeprofilestart'}
+        name='completeprofilestart'
+        component={CompleteProfileStartScreen}
       />
     </Stack.Navigator>
   )

@@ -2997,11 +2997,6 @@ data-view-byte-offset@^1.0.0:
     es-errors "^1.3.0"
     is-data-view "^1.0.1"
 
-date-and-time@0.9.0:
-  version "0.9.0"
-  resolved "https://registry.npmjs.org/date-and-time/-/date-and-time-0.9.0.tgz"
-  integrity sha512-4JybB6PbR+EebpFx/KyR5Ybl+TcdXMLIJkyYsCx3P4M4CWGMuDyFF19yh6TyasMAIF5lrsgIxiSHBXh2FFc7Fg==
-
 dayjs@^1.8.15:
   version "1.11.10"
   resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.10.tgz"
@@ -3208,6 +3203,13 @@ encodeurl@~1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/encodeurl/-/encodeurl-1.0.2.tgz"
   integrity sha512-TPJXq8JqFaVYm2CWmPvnP2Iyo4ZSM7/QKcSmuMLDObfpH5fi7RUGmd/rTDf+rut/saiDiQEeVTNgAmJEdAOx0w==
+
+encoding@^0.1.0:
+  version "0.1.13"
+  resolved "https://registry.npmjs.org/encoding/-/encoding-0.1.13.tgz"
+  integrity sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==
+  dependencies:
+    iconv-lite "^0.6.2"
 
 entities@^4.2.0:
   version "4.5.0"
@@ -4035,6 +4037,13 @@ human-signals@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/human-signals/-/human-signals-2.1.0.tgz"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
+
+iconv-lite@^0.6.2:
+  version "0.6.3"
+  resolved "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.6.3.tgz"
+  integrity sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==
+  dependencies:
+    safer-buffer ">= 2.1.2 < 3.0.0"
 
 ieee754@^1.1.13:
   version "1.2.1"
@@ -5333,6 +5342,11 @@ moment@^2.29.4, moment@^2.30.1:
   resolved "https://registry.npmjs.org/moment/-/moment-2.30.1.tgz"
   integrity sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==
 
+moment@2.19.3:
+  version "2.19.3"
+  resolved "https://registry.npmjs.org/moment/-/moment-2.19.3.tgz"
+  integrity sha512-SiZ1HUDMfBpfCzL1Hm1vxUFkYDbHx8/RiWBLF+5qoVWTlBGtR15+wVQB7eSD/0w3ueDxzojlX9LQtiKVpLMsFQ==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz"
@@ -5935,13 +5949,13 @@ react-native-linear-gradient@^2.8.3, react-native-linear-gradient@>=1.5.0:
   resolved "https://registry.npmjs.org/react-native-linear-gradient/-/react-native-linear-gradient-2.8.3.tgz"
   integrity sha512-KflAXZcEg54PXkLyflaSZQ3PJp4uC4whM7nT/Uot9m0e/qxFV3p6uor1983D1YOBJbJN7rrWdqIjq0T42jOJyA==
 
-react-native-masked-text@^1.13.0:
-  version "1.13.0"
-  resolved "https://registry.npmjs.org/react-native-masked-text/-/react-native-masked-text-1.13.0.tgz"
-  integrity sha512-iMku5Ky6DP4fTRosjsYNJOhH8yoBQCzRALBdv1wVDKmCBQhhVE8RHr5EW4SNUjkYTZL473sDdEKl4NI948q9FQ==
+react-native-masked-text@^1.12.5:
+  version "1.12.5"
+  resolved "https://registry.npmjs.org/react-native-masked-text/-/react-native-masked-text-1.12.5.tgz"
+  integrity sha512-lKGxeMbRW7c5pgGt6lSSsobIs5v3Gys8GHR4t5QDbHSJENDIOY97MWeucyhbuG+zJOhBo1XFIkCHkg5PsLU14g==
   dependencies:
-    date-and-time "0.9.0"
-    tinymask "1.0.2"
+    moment "2.19.3"
+    tinymask "^1.0.2"
 
 react-native-material-menu@^2.0.0:
   version "2.0.0"
@@ -5986,6 +6000,11 @@ react-native-shadow-2@^7.0.8:
   integrity sha512-6QlmbJvHCmDGa85jwtfrVxhro1oGm/ezTlciom0A+i0UFAzxlvmRiMHyKXg1hEB2PQkKPoG6ZpANju4mpqPqGA==
   dependencies:
     colord "2.9.2"
+
+react-native-snap-carousel@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.npmjs.org/react-native-snap-carousel/-/react-native-snap-carousel-1.3.1.tgz"
+  integrity sha512-3i5oR6Z1nH7mejw1LIki9NR8/T2tO+ZK9RkrDCcAGBxwflnoRrCi0B23qhp30XLS819w9l0KaLRsf6sqnQKKcA==
 
 react-native-svg@^15.1.0, react-native-svg@>=12.1.0:
   version "15.1.0"
@@ -6331,6 +6350,11 @@ safe-regex-test@^1.0.3:
     call-bind "^1.0.6"
     es-errors "^1.3.0"
     is-regex "^1.1.4"
+
+"safer-buffer@>= 2.1.2 < 3.0.0":
+  version "2.1.2"
+  resolved "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz"
+  integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
 scheduler@^0.23.0:
   version "0.23.0"
@@ -6793,7 +6817,7 @@ through2@^2.0.1:
     readable-stream "~2.3.6"
     xtend "~4.0.1"
 
-tinymask@1.0.2:
+tinymask@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/tinymask/-/tinymask-1.0.2.tgz"
   integrity sha512-2FjNINAMq0s3e94ns2PuElOQZOt9QVgnrv0JZ8yNblwecyQDhVsSre6Rs+WJj/IHEcgdfYbDMP7zvECTfV/Xnw==
