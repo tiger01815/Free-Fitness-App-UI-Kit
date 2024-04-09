@@ -11,18 +11,48 @@ import {
     StatusBar,
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import Config from '../config/Config';
 import Constants from '../common/Constants';
 // import StyledTextInput from '../common/StyledTextInput'; 
 
 const LogInScreen = ({navigation})=>{
     const emailRef = useRef();
-    const [email, setEmail] = useState('')
+    
     const [keyboardHeight, setKeyboardHeight] = useState('')
     const passwordRef = useRef();
-    const [password, setPassword] = useState('')
     const [secureTextEntry, setSecureTextEntry] = useState(true);
-    const login=()=>{navigation.navigate('loginsucces')}
+    
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const login= async(navigation)=>{
+        try{
+            const {data} = await Config.post('/sign-in',{
+                    email:email,
+                    password:password
+                },{
+                    headers:{
+                        'Content-Type':"application/json",
+                        'Accept':"application/json"
+                    }
+                }
+            );
+
+            if(data.success){
+                let userInfo = data;
+                AsyncStorage.setItem('userInfo',JSON.stringify(userInfo));
+                navigation.navigate('loginsucces')
+            }else{
+                alert(data.message);
+            }
+        }catch(e){ 
+            console.log(e);
+        }
+        
+    }
 
     useEffect(() => {
         const showSubscription = Keyboard.addListener("keyboardWillShow", (event) => keyboardDidShow(event));

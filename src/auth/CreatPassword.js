@@ -1,4 +1,4 @@
-import react, {useEffect, useState, useRef} from 'react';
+import react, {useEffect, useState,useContext, useRef} from 'react';
 import {
     Text,
     TextInput,
@@ -8,27 +8,62 @@ import {
     Keyboard,
     StyleSheet,
     TouchableWithoutFeedback,
-    StatusBar
+    StatusBar,
+    ScrollView
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import Config from '../config/Config';
 import Constants from '../common/Constants';
-
+import AuthContext from '../context/AuthContext';
 
 const CreatPasswordScreen = ({navigation})=>{
     const emailRef = useRef();
-    const [email, setEmail] = useState('')
+    // const {sessionStart} = useContext(AuthContext)
     const [keyboardHeight, setKeyboardHeight] = useState('')
     const passwordRef = useRef();
-    const [password, setPassword] = useState('')
+    
     const [secureTextEntry, setSecureTextEntry] = useState(true);
     const gologin=()=>{navigation.navigate('login')}
-    const register=()=>{navigation.navigate('completeprofilestart')}
-    // const temp = 
     const [ticked, setTicked] = useState(true);
-    // const [icon,setIcon] = ticked ? useState(require('../../assets/image/tick.png')) : 
-
     const toggleTick = ()=>setTicked(!ticked)
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('')
+    
+    const register= async (navigation)=>{
+        try {
+            const {data} = await Config.post('/create-user',{
+                firstName:firstName,
+                lastName:lastName,
+                email:email,
+                password:password
+            },{
+                headers:{
+                    'Content-Type':'application/json',
+                    'Accept':'application/json'
+                }
+            })
+            
+            if(data.success) {
+                let userInfo = data;
+                AsyncStorage.setItem('userInfo',JSON.stringify(userInfo));
+                navigation.navigate('completeprofilestart')
+            }else{
+                alert(data.message);
+            }
+
+        }catch(e){
+            console.log(e)
+            // alert()
+        }
+
+        
+    }
 
     useEffect(() => {
         const showSubscription = Keyboard.addListener("keyboardWillShow", (event) => keyboardDidShow(event));
@@ -58,20 +93,24 @@ const CreatPasswordScreen = ({navigation})=>{
                         <Text style={styles.text1}>Hey there</Text>
                         <Text style={styles.text2}>Create an Account</Text>
                     </View>
+                    <ScrollView style={{paddingTop:20, paddingBottom:30}}>
                     <View style={styles.inputSectionContainer}>
                         <View style={styles.emailInputContainer}>
                             <Image style={styles.inputIconStyle} source={require('../../assets/image/Profile.png')}/>
                             <TextInput 
                                 placeholder='First Name' 
                                 style={styles.emailInputStyle}
+                                value={firstName}
+                                onChangeText={(val)=>setFirstName(val)}
                             />
                         </View>
                         <View style={styles.emailInputContainer}>
                             <Image style={styles.inputIconStyle} source={require('../../assets/image/Profile.png')}/>
                             <TextInput 
-                                placeholder='Email' 
+                                placeholder='Last Name' 
                                 style={styles.emailInputStyle}
-                                keyboardType='email-address'
+                                value={lastName}
+                                onChangeText={(val)=>setLastName(val)}
                             />
                         </View>
                         <View style={styles.emailInputContainer}>
@@ -79,6 +118,8 @@ const CreatPasswordScreen = ({navigation})=>{
                             <TextInput 
                                 placeholder='Email' 
                                 style={styles.emailInputStyle}
+                                value={email}
+                                onChangeText={(val)=>setEmail(val)}
                             />
                             {/* <StyledTextInput
                                 ref={emailRef}
@@ -100,6 +141,8 @@ const CreatPasswordScreen = ({navigation})=>{
                                 placeholder='Password' 
                                 style={styles.emailInputStyle}
                                 secureTextEntry={secureTextEntry}
+                                value={password}
+                                onChangeText={(val)=>setPassword(val)}
                             />
                             <TouchableOpacity  onPress={()=>setSecureTextEntry(!secureTextEntry)}>
                             {secureTextEntry?
@@ -122,6 +165,7 @@ const CreatPasswordScreen = ({navigation})=>{
                             <Text style={styles.forgottext}>By continuing you accept our <Text style={styles.confirmunderlinetext}>Privacy Policy</Text> and <Text style={styles.confirmunderlinetext}>Term of Use.</Text></Text>
                         </View>
                     </View>
+                    </ScrollView>
                     
                 </View>
                 <View style={styles.bottomcontainer}>
@@ -154,7 +198,7 @@ const CreatPasswordScreen = ({navigation})=>{
                             fontSize:Constants.FONT_SIZE.FT14
                             }}>
                                 Alerady have an account?
-                               <Text onPress={()=>navigation.navigate('profilestepone')} 
+                               <Text onPress={()=>navigation.navigate('login')} 
                                style={{color:'#DA98DF',
                                fontFamily:Constants.FONT_FAMILY.PRIMARY_REGULAR,
                                fontSize:Constants.FONT_SIZE.FT14

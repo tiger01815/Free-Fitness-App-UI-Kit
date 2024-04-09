@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {useState, useEffect,useRef, Component}from 'react';
+import React, {useState, useEffect,useRef,useReducer,useMemo, Component}from 'react';
 // import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -97,6 +97,8 @@ import ProfileStepOneScreen from './src/auth/ProfileStepOne';
 
 //constant
 import Constants from './src/common/Constants';
+//
+import AuthContext from './src/context/AuthContext';
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator();
@@ -792,17 +794,51 @@ function NavigatorDrawer(){
 }
 
 function App(){
+  const [state, dispatch] = useReducer(
+    (prevState, action) => {
+      switch(action.type) {
+        case 'RESTORE_TOKEN':
+          return {
+            ...prevState,
+            token:action.token,
+            loading:false
+          };
+        case 'SIGN_IN':
+          return {
+            ...prevState,
+            token:action.token
+          };
+        case 'SIGN_OUT':
+          return {
+            ...prevState,
+            token:null
+          };
+      }
+    },
+    {
+      loading:true,
+      token:null
+    }
+  );
+  
+  const authContext = useMemo (
+    ()=>({
+      sessionStart: async data => {
+        dispatch({type:'SIGN_IN',token:'dummy-token'});
+      },
+      sessionClose:()=> dispatch({type:'SIGN_OUT'})
+    })
+  )
+
   return (
-    <SafeAreaProvider
-      style={{
-        // backgroundColor:'white'
-      }}
-    >
-      <NavigationContainer>
-        {/* <NavigatorTab/> */}
-        <NavigatorDrawer/>
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <AuthContext.Provider value={authContext}>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          {/* <NavigatorTab/> */}
+          <NavigatorDrawer/>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </AuthContext.Provider>
   )
 }
 
