@@ -59,6 +59,7 @@ import {
   useSafeAreaInsets
 } from 'react-native-safe-area-context'
 import LinearGradient from 'react-native-linear-gradient'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //Profile
 import ProfileScreen from './src/profile/Profile';
@@ -264,9 +265,14 @@ function Onboarding(){
         name='OnboardingImproveSleep'
         component={OnboardingImproveSleepScreen}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={'NavigatorTab'}
         component={NavigatorTab}
+      /> */}
+      <Stack.Screen
+        key={'OnboardingAuth'}
+        name='OnboardingAuth'
+        component={Auth}
       />
     </Stack.Navigator>
   )
@@ -276,7 +282,7 @@ function Auth(){
   return (
     <Stack.Navigator
       screenOptions={{headerShown:false}}
-      initialRouteName='createpassword'
+      initialRouteName='login'
     >
       <Stack.Screen
         key={'login'}
@@ -815,6 +821,25 @@ function NavigatorDrawer(){
 }
 
 function App(){
+
+  const [userInfo, setUserInfo] = useState();
+  const [isRegistered, setIsRegistered] = useState(false);
+  useEffect(()=>{
+    getuserInfo()
+    return()=>{}
+  },[])
+
+  const getuserInfo = async ()=>{
+    try{
+      // const userInfo =await AsyncStorage.getItem('userInfo');
+      setUserInfo(await AsyncStorage.getItem('userInfo'));
+      setIsRegistered(await AsyncStorage.getItem('isRegistered'));
+    }catch(e){
+      console.log(e)
+    }
+
+  }
+
   const [state, dispatch] = useReducer(
     (prevState, action) => {
       switch(action.type) {
@@ -847,7 +872,10 @@ function App(){
       sessionStart: async data => {
         dispatch({type:'SIGN_IN',token:'dummy-token'});
       },
-      sessionClose:()=> dispatch({type:'SIGN_OUT'})
+      sessionClose:()=> {
+        dispatch({type:'SIGN_OUT'});
+        AsyncStorage.removeItem('userInfo');
+      }
     })
   )
 
@@ -855,11 +883,11 @@ function App(){
     <AuthContext.Provider value={authContext}>
       <SafeAreaProvider>
         <NavigationContainer>
-          {
+          {isRegistered ? 
             state.token != null ? 
             <NavigatorDrawer/>
             : 
-            <Auth/>
+            <Auth/> : <Onboarding/>
           }
         </NavigationContainer>
       </SafeAreaProvider>

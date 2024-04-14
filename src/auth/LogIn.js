@@ -42,6 +42,7 @@ const LogInScreen = ({navigation})=>{
                 setLoading(false)
                 let userInfo = data;                
                 AsyncStorage.setItem('userInfo',JSON.stringify(userInfo));
+                AsyncStorage.setItem('isRegistered',"true");
                 sessionStart()
             }
             else{

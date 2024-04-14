@@ -55,6 +55,7 @@ const CreatPasswordScreen = ({navigation})=>{
             if(data.success) {
                 let userInfo = data;
                 AsyncStorage.setItem('userInfo',JSON.stringify(userInfo));
+                AsyncStorage.setItem('isRegistered',"true");
                 setLoading(false)
                 navigation.navigate('completeprofilestart')
             }else{

@@ -25,19 +25,9 @@ const OnboardingImproveSleepScreen = ({navigation}) =>{
                 <Text style={styles.title}>Improve Sleep{'\n'}Quality</Text>
                 <Text style={styles.description}>Improve the quality of your sleep with us, good quality sleep can bring a good mood in the morning</Text>
             </View>
-            <TouchableOpacity style={styles.nextbuttonstyle} onPress={()=>navigation.navigate('NavigatorTab')}>
+            <TouchableOpacity style={styles.nextbuttonstyle} onPress={()=>navigation.navigate('OnboardingAuth')}>
                 <Image style={styles.nextbuttonimage} source={require('../../assets/image/onboarding-button-4.png')}/>
             </TouchableOpacity>
-            {/* <LinearGradient
-                colors={['#C58BF2', '#EEA4CE' ]}
-                style={{
-                height:18,
-                borderRadius:12
-                }}
-                start={{ x: 1, y: 1 }}
-            >
-
-            </LinearGradient> */}
         </View>
     )
 }
