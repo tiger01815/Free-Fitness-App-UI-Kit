@@ -283,11 +283,11 @@ function Auth(){
         name='login'
         component={LogInScreen}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         key={'loginsucces'}
         name='loginsucces'
         component={LogInSuccessScreen}
-      />
+      /> */}
       <Stack.Screen
         key={'createpassword'}
         name='createpassword'
@@ -303,6 +303,25 @@ function Auth(){
         key={'profilestepone'}
         name='profilestepone'
         component={ProfileStepOneScreen}
+      />
+    </Stack.Navigator>
+  )
+}
+function GettingStart(){
+  return(
+    <Stack.Navigator
+      screenOptions={{headerShown:false}}
+      initialRouteName='loginsucces'
+    >
+      <Stack.Screen
+        key={'loginsucces'}
+        name='loginsucces'
+        component={LogInSuccessScreen}
+      />
+      <Stack.Screen
+        key={'GettingTab'}
+        name='GettingTab'
+        component={NavigatorTab}
       />
     </Stack.Navigator>
   )
@@ -768,16 +787,18 @@ function NavigatorDrawer(){
           width:Constants.LAYOUT.SCREEN_WIDTH-100
         }
       }}
-      initialRouteName={'loginDrawer'}
+      initialRouteName={'GoToHome'}
       drawerContent={props => <CustomDrawerContent {...props}/>}
     >
       <Drawer.Screen
        name={'NavigatorTab'}
        component={NavigatorTab}
       />
-      {/* <Drawer.Screen
-        name={'on'}
-      /> */}
+      <Drawer.Screen
+        key={'GoToHome'}
+        name="GoToHome"
+        component={GettingStart}
+      />
       <Drawer.Screen
         key={'OnboardingStartDrawer'}
         name='OnboardingStartDrawer'
@@ -834,8 +855,12 @@ function App(){
     <AuthContext.Provider value={authContext}>
       <SafeAreaProvider>
         <NavigationContainer>
-          {/* <NavigatorTab/> */}
-          <NavigatorDrawer/>
+          {
+            state.token != null ? 
+            <NavigatorDrawer/>
+            : 
+            <Auth/>
+          }
         </NavigationContainer>
       </SafeAreaProvider>
     </AuthContext.Provider>

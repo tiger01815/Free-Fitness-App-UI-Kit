@@ -1,4 +1,4 @@
-import react, {useState,useRef,useEffect} from 'react';
+import react, {useState,useRef,useEffect, useContext} from 'react';
 import {
     Text,
     View,
@@ -16,6 +16,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Config from '../config/Config';
 import Constants from '../common/Constants';
+import Spinner from '../common/Spinner';
+import AuthContext from '../context/AuthContext';
 // import StyledTextInput from '../common/StyledTextInput'; 
 
 const LogInScreen = ({navigation})=>{
@@ -23,33 +25,32 @@ const LogInScreen = ({navigation})=>{
     
     const [keyboardHeight, setKeyboardHeight] = useState('')
     const passwordRef = useRef();
+    const {sessionStart} = useContext(AuthContext)
+
     const [secureTextEntry, setSecureTextEntry] = useState(true);
-    
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false);
 
-    const login= async(navigation)=>{
+    const login = async(email,password)=>{
         try{
-            const {data} = await Config.post('/sign-in',{
-                    email:email,
-                    password:password
-                },{
-                    headers:{
-                        'Content-Type':"application/json",
-                        'Accept':"application/json"
-                    }
-                }
+            setLoading(true)
+            const {data} = await axios.post('http://192.168.118.138:8000/sign-in',{email,password}
             );
-
+            console.log(data)
             if(data.success){
-                let userInfo = data;
+                setLoading(false)
+                let userInfo = data;                
                 AsyncStorage.setItem('userInfo',JSON.stringify(userInfo));
-                navigation.navigate('loginsucces')
-            }else{
+                sessionStart()
+            }
+            else{
+                setLoading(false)
                 alert(data.message);
             }
-        }catch(e){ 
-            console.log(e);
+        }catch(error){
+            setLoading(false)
+            console.log('login err==>',JSON.stringify(error))
         }
         
     }
@@ -88,6 +89,8 @@ const LogInScreen = ({navigation})=>{
                             <TextInput 
                                 placeholder='Email' 
                                 style={styles.emailInputStyle}
+                                value={email}
+                                onChangeText={(val)=>setEmail(val)}
                             />
                             {/* <StyledTextInput
                                 ref={emailRef}
@@ -109,6 +112,8 @@ const LogInScreen = ({navigation})=>{
                                 placeholder='Password' 
                                 style={styles.emailInputStyle}
                                 secureTextEntry={secureTextEntry}
+                                value={password}
+                                onChangeText={(val)=>setPassword(val)}
                             />
                             <TouchableOpacity  onPress={()=>setSecureTextEntry(!secureTextEntry)}>
                             {secureTextEntry?
@@ -122,7 +127,7 @@ const LogInScreen = ({navigation})=>{
                     
                 </View>
                 <View style={styles.bottomcontainer}>
-                        <TouchableOpacity style={{width:'100%'}} onPress={()=>login()}>
+                        <TouchableOpacity style={{width:'100%'}} onPress={()=>login(email,password)}>
                             <LinearGradient
                                 colors={['#A192FD', '#9DCEFF' ]}
                                 style={styles.gradiendbutton}
@@ -143,7 +148,9 @@ const LogInScreen = ({navigation})=>{
                         </View>
                         <Text style={{marginTop:20,color:'#1D1617',fontFamily:Constants.FONT_FAMILY.PRIMARY_REGULAR,fontSize:Constants.FONT_SIZE.FT14}}>Don't have an account yet?<Text style={{color:'#DA98DF',fontFamily:Constants.FONT_FAMILY.PRIMARY_REGULAR,fontSize:Constants.FONT_SIZE.FT14}} onPress={()=>navigation.navigate('createpassword')}>Register</Text></Text>
                 </View>
+                {loading && <Spinner visible={true} />}
             </View>
+            
         </TouchableWithoutFeedback>
     )
     

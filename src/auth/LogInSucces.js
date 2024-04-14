@@ -1,4 +1,4 @@
-import react from 'react';
+import react, {useEffect, useState} from 'react';
 import {
     Text,
     Image,
@@ -8,9 +8,29 @@ import {
     View
 } from 'react-native';
 import LinearGradient from'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import Constants from '../common/Constants';
 
-const LogInSuccessScreen = () =>{
+const LogInSuccessScreen = ({navigation}) =>{
+    useEffect(()=>{
+        getInfo()
+        
+    })
+
+    const getInfo = async()=>{
+        try{
+            const userInfo = await AsyncStorage.getItem('userInfo');
+            console.log(JSON.parse(userInfo).token)
+            setUserName(JSON.parse(userInfo).user.fullname)
+        }catch(e){
+            console.log(e)
+        }
+    }
+
+    const [userName, setUserName] = useState('');
+
+    const gotohome = ()=>navigation.navigate('NavigatorTab')
     return(
         <View style={styles.container}>
             <StatusBar backgroundColor={'white'}/>
@@ -28,11 +48,11 @@ const LogInSuccessScreen = () =>{
                         width:277.56
                     }}
                 />
-                <Text style={{fontSize:Constants.FONT_SIZE.FT20,fontFamily:Constants.FONT_FAMILY.PRIMARY_BOLD,color:Constants.COLOR.BackColor, marginTop:25}}>Welcome, Stefani</Text>
+                <Text style={{fontSize:Constants.FONT_SIZE.FT20,fontFamily:Constants.FONT_FAMILY.PRIMARY_BOLD,color:Constants.COLOR.BackColor, marginTop:25}}>{`Welcome, ${userName}`}</Text>
                 <Text style={{fontSize:Constants.FONT_SIZE.FT12,fontFamily:Constants.FONT_FAMILY.PRIMARY_REGULAR,color:'#7B6F72',textAlign:'center'}}>You are all set now, let’s reach your {'\n'}goals together with us</Text>
             </View>
             <View style={{marginBottom:30}}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>gotohome()}>
                     <LinearGradient
                         colors={['#A192FD', '#9DCEFF' ]}
                         style={{

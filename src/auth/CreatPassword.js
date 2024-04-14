@@ -18,6 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Config from '../config/Config';
 import Constants from '../common/Constants';
 import AuthContext from '../context/AuthContext';
+import Spinner from '../common/Spinner';
 
 const CreatPasswordScreen = ({navigation})=>{
     const emailRef = useRef();
@@ -34,14 +35,16 @@ const CreatPasswordScreen = ({navigation})=>{
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
-    
-    const register= async (navigation)=>{
+    const [loading, setLoading] = useState(false);
+
+    const register= async ()=>{
+        setLoading(true)
         try {
-            const {data} = await Config.post('/create-user',{
-                firstName:firstName,
-                lastName:lastName,
+            const {data} = await axios.post('http://192.168.118.138:8000/create-user',{
+                fullname:firstName + lastName,
                 email:email,
-                password:password
+                password:password,
+                confirmPassword:password
             },{
                 headers:{
                     'Content-Type':'application/json',
@@ -52,14 +55,17 @@ const CreatPasswordScreen = ({navigation})=>{
             if(data.success) {
                 let userInfo = data;
                 AsyncStorage.setItem('userInfo',JSON.stringify(userInfo));
+                setLoading(false)
                 navigation.navigate('completeprofilestart')
             }else{
+                setLoading(false)
                 alert(data.message);
             }
 
         }catch(e){
+            setLoading(false)
             console.log(e)
-            // alert()
+            alert(e.massage)
         }
 
         
@@ -207,6 +213,7 @@ const CreatPasswordScreen = ({navigation})=>{
                             </Text>
                             </Text>
                 </View>
+                {loading && <Spinner visible={true}/>}
             </View>
         </TouchableWithoutFeedback>
     )

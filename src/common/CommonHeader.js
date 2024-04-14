@@ -1,4 +1,4 @@
-import react,{useState} from 'react';
+import react,{useState, useContext} from 'react';
 import {
     View,
     Image,
@@ -7,12 +7,14 @@ import {
 } from'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
-
+import AuthContext from '../context/AuthContext';
 import Constants from './Constants';
 const CommonHeader = ({title, backenable, onBackPress=null,onMenuPress=null})=>{
+  const {sessionClose} = useContext(AuthContext);
   const inset = useSafeAreaInsets();
   const [menuVisible,setMenuVisible] = useState(false);
   const toggleVisible=()=>setMenuVisible(!menuVisible)
+  const logout = () => sessionClose()
     return(
         <View
           style={{
@@ -69,7 +71,7 @@ const CommonHeader = ({title, backenable, onBackPress=null,onMenuPress=null})=>{
           onRequestClose={toggleVisible}
       >
           <MenuItem onPress={toggleVisible}>Menu item 1</MenuItem>
-          <MenuItem onPress={toggleVisible}>Menu item 2</MenuItem>
+          <MenuItem onPress={logout}>Log out</MenuItem>
           {/* <MenuItem disabled>Disabled item</MenuItem> */}
           {/* <MenuDivider /> */}
           {/* <MenuItem onPress={toggleVisible}>Menu item </MenuItem> */}
